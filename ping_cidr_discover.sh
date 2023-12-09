@@ -62,5 +62,6 @@ for host in $(seq 0  $totalhosts ); do      # Calculating possible IP addresses 
 
 
         ip="$a.$b.$c.$d"
-        timeout 0.3 arp $ip -v -n -i $1 | grep $1
+        (timeout 0.5 ping -c 1 $ip | grep 'bytes from' | awk '{print $4}' | sed 's/:/ Active/g') &
+
 done
