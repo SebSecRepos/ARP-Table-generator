@@ -18,8 +18,9 @@ netmask=$(echo $baseNetParams | cut -d "/" -f2)
 
 # Total hosts calculation based in netmask prefix
 less=$((32 - $netmask))
-pot=$(echo 2 ^ $less | bc )
-totalhosts=$(echo $pot - 3 | bc)
+pot=$(echo $((2** $less))  )
+totalhosts=$(echo $(($pot - 3)) )
+
 
 #Creating arp table file
 touch ./table.tmp
@@ -82,5 +83,6 @@ for host in $(seq 0  $totalhosts ); do      # Calculating possible IP addresses 
    
 done
 
-echo -e "\n     Mac          /   ip    "
+echo -e "\n     Mac          |    ip    "
+echo -e "-----------------------------------\n"
 cat table.tmp
